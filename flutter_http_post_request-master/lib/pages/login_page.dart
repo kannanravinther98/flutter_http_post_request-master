@@ -66,8 +66,9 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: 20),
                         new TextFormField(
                           keyboardType: TextInputType.emailAddress,
-                          onSaved: (input) => loginRequestModel.email = input,
-                          // validator: (input) => !input.contains('j')
+                          onSaved: (input) =>
+                              loginRequestModel.username = input,
+                          // validator: (input) => !input.contains('@')
                           //     ? "Email Id should be valid"
                           //     : null,
                           decoration: new InputDecoration(
