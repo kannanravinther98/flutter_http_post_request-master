@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_http_post_request/api/api_service.dart';
 import 'package:flutter_http_post_request/model/login_model.dart';
+import 'package:flutter_http_post_request/utils/storage.dart';
 
 import '../ProgressHUD.dart';
 
@@ -68,11 +69,11 @@ class _LoginPageState extends State<LoginPage> {
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (input) =>
                               loginRequestModel.username = input,
-                          // validator: (input) => !input.contains('@')
+                          // validator: (input) => !input.contains('j')
                           //     ? "Email Id should be valid"
                           //     : null,
                           decoration: new InputDecoration(
-                            hintText: "Email Address",
+                            hintText: "Username",
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Theme.of(context)
@@ -82,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                                 borderSide: BorderSide(
                                     color: Theme.of(context).accentColor)),
                             prefixIcon: Icon(
-                              Icons.email,
+                              Icons.person,
                               color: Theme.of(context).accentColor,
                             ),
                           ),
@@ -147,13 +148,21 @@ class _LoginPageState extends State<LoginPage> {
                                   });
 
                                   if (value.token.isNotEmpty) {
+                                    // we save the token to a secured storage so that we can reuse it
+                                    // in our http_client class function - createHeaders with authorization
+                                    // bearer token
+                                    Storage().token = value.token;
+
                                     final snackBar = SnackBar(
                                         content: Text("Login Successful"));
                                     scaffoldKey.currentState
                                         .showSnackBar(snackBar);
                                   } else {
-                                    final snackBar =
-                                        SnackBar(content: Text(value.error));
+                                    Storage().error = value.error;
+                                    final snackBar = SnackBar(
+                                        content: Text(
+                                            value.error)); //Text(value.error));
+                                    // content: Text("Login Unseuccessful"));
                                     scaffoldKey.currentState
                                         .showSnackBar(snackBar);
                                   }
@@ -189,4 +198,6 @@ class _LoginPageState extends State<LoginPage> {
     }
     return false;
   }
+
+  Snackbar({Text content}) {}
 }

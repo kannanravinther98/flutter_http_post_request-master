@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Telling Android (iOS is not affected) not to backup sharedpref 
+    that is stored by FlutterSecureStorage -->
+<full-backup-content>
+    <exclude domain="sharedpref" path="FlutterSecureStorage"/>
+</full-backup-content>
