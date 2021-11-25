@@ -31,8 +31,9 @@ class APIService {
         json.decode(response.body),
       );
     } else {
-      print(Exception())
-      throw Exception as e ('Failed to load data!');
+      throw Exception ('Failed to load data!');
     }
   }
 }
+
+   
